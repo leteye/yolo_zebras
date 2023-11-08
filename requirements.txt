@@ -1,0 +1,7 @@
+lap==0.4.0
+natsort==7.1.1
+numpy==1.21.5
+opencv_python==4.6.0.66
+pandas==1.4.4
+torch==2.0.0
+ultralytics==8.0.53

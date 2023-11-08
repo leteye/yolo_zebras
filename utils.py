@@ -1,5 +1,14 @@
 # ---UTILS MODULE---
 
+import numpy as np
+import pandas as pd
+import cv2
+import os
+import shutil
+import natsort as ns
+import json
+
+
 def get_video_specs(path):
     """
     Returns video specifications (width, height, frame rate)
@@ -34,8 +43,8 @@ def video2frames(src, out, sample, xr, yr, x, y, w, h):
     if not cap.isOpened():
         print('Error opening video')
 
-    if not os.path.exists(os.getcwd() + out):
-        os.mkdir(os.getcwd() + out)
+    if not os.path.exists(os.getcwd() + '/' + out):
+        os.mkdir(os.getcwd() + '/' + out)
 
     i, s = 0, 0
     while cap.isOpened():
@@ -46,7 +55,7 @@ def video2frames(src, out, sample, xr, yr, x, y, w, h):
                 frame = cv2.resize(frame, (xr, yr), cv2.INTER_NEAREST)
                 # cv2.rectangle(frame , (y, x), (y+h, x+w), (255, 255, 255), thickness=2)
                 frame = frame[x:w, y:h]
-                cv2.imwrite(os.getcwd() + out + 'z1-' + str(i) + '.jpg', frame)
+                cv2.imwrite(os.getcwd() + '/' + out + '/' + 'z1-' + str(i) + '.jpg', frame)
 
                 s += 1
             i += 1
@@ -57,7 +66,7 @@ def video2frames(src, out, sample, xr, yr, x, y, w, h):
     return f'OK, {s} frames were saved'
 
 
-def frames2video(src, out, rate):  # , w, h):
+def frames2video(src, out, rate):
 
     """
     Assembling video from frames set.
@@ -68,8 +77,8 @@ def frames2video(src, out, rate):  # , w, h):
     rate: frame rate of output
     """
 
-    names = ns.natsorted(os.listdir(os.getcwd() + src))
-    frame_1 = cv2.imread(os.getcwd() + src + names[0])
+    names = ns.natsorted(os.listdir(os.getcwd() + '/' + src))
+    frame_1 = cv2.imread(os.getcwd() + '/' + src + '/' + names[0])
     h, w = frame_1.shape[0], frame_1.shape[1]
 
     fourcc = cv2.VideoWriter_fourcc(*'XVID')  # *'mp4v'
@@ -77,7 +86,7 @@ def frames2video(src, out, rate):  # , w, h):
 
     i = 0
     for name in names:
-        frame = cv2.imread(os.getcwd() + src + name)
+        frame = cv2.imread(os.getcwd() + '/' + src + '/' + name)
         wrt.write(frame)
         i += 1
 
@@ -192,7 +201,7 @@ def VIA2YOLO_detect(data, cls_codes, out_dir, imgsize):
 
         #         # with empty files for empty pics
         if r_count == 0:
-            with open(out_dir + str(label[:-4]) + '.txt', 'w') as f:
+            with open(out_dir + '/' + str(label[:-4]) + '.txt', 'w') as f:
                 f.write('')
 
         if r_count == 1:
@@ -211,7 +220,7 @@ def VIA2YOLO_detect(data, cls_codes, out_dir, imgsize):
 
                 fin_str = str(cls_id) + ' ' + str(xywh)[1:-1].replace(',', '')
 
-                with open(out_dir + str(label[:-4]) + '.txt', 'w') as f:
+                with open(out_dir + '/' + str(label[:-4]) + '.txt', 'w') as f:
                     f.write(fin_str + '\n')
 
         if r_count > 1:
@@ -230,7 +239,7 @@ def VIA2YOLO_detect(data, cls_codes, out_dir, imgsize):
 
                 fin_str = str(cls_id) + ' ' + str(xywh)[1:-1].replace(',', '')
 
-                with open(out_dir + str(label[:-4]) + '.txt', 'a') as f:
+                with open(out_dir + '/' + str(label[:-4]) + '.txt', 'a') as f:
                     f.write(fin_str + '\n')
 
     return annot['region_attributes'].value_counts()
@@ -243,13 +252,13 @@ def labels4images(root, img_prefix, lab_prefix):
     by user) and divides labels accordingly
     """
 
-    img_names = os.listdir(root + img_prefix + '/train')
-    lab_names = os.listdir(root + lab_prefix)
+    img_names = os.listdir(root + '/' + img_prefix + '/train/')
+    lab_names = os.listdir(root + '/' + lab_prefix)
 
-    if not os.path.exists(root + lab_prefix + '/train'):
-        os.mkdir(root + lab_prefix + '/train')
-    if not os.path.exists(root + lab_prefix + '/val'):
-        os.mkdir(root + lab_prefix + '/val')
+    if not os.path.exists(root + '/' + lab_prefix + '/train'):
+        os.mkdir(root + '/' + lab_prefix + '/train')
+    if not os.path.exists(root + '/' + lab_prefix + '/val'):
+        os.mkdir(root + '/' + lab_prefix + '/val')
 
     lnames, inames = [], []
 
@@ -263,13 +272,13 @@ def labels4images(root, img_prefix, lab_prefix):
     for name in lnames:
         if name in inames:
             shutil.move(
-                root + lab_prefix + '/' + name + '.' + ext,
-                root + lab_prefix + '/train/' + name + '.' + ext
+                root + '/' + lab_prefix + '/' + name + '.' + ext,
+                root + '/' + lab_prefix + '/train/' + name + '.' + ext
             )
         else:
             shutil.move(
-                root + lab_prefix + '/' + name + '.' + ext,
-                root + lab_prefix + '/val/' + name + '.' + ext
+                root + '/' + lab_prefix + '/' + name + '.' + ext,
+                root + '/' + lab_prefix + '/val/' + name + '.' + ext
             )
 
     return 'OK'

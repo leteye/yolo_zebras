@@ -6,14 +6,9 @@ import lap  # dependency for YOLO tracker
 import numpy as np
 import pandas as pd
 import cv2
-from PIL import Image
-from matplotlib.pyplot import imshow
-import matplotlib.pyplot as plt
 import os
 import shutil
-import warnings
 import random
-import matplotlib.cbook as cbook
 import natsort as ns
 import json
 import itertools as it
@@ -30,7 +25,6 @@ torch.backends.cudnn.deterministic = True
 # PT version, CPU/GPU availability
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(f'torch version: {torch.__version__}, device: {device}')
-
 
 # x-large model with default settings too big for 12GB video GPU (@batch=16, @RGB760px)
 # detection model of middle size used (all models are in "models" dir)
