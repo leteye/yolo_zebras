@@ -14,7 +14,7 @@ The Project developed for tracking zebras in a wild on video recorded by UAV. Th
   
 **Sample results could be accessed by request.**
 
-![results.png](/blob/results.png)
+![results.png](/blob/0.jpg)
 _0, 60 and 120 frame of output video_
 
 YOLO model training and inference as tracker inference was conducted on downsampled and cropped original video (from 2700x1520 to 960x760). Module utils.py include several helper functions for data preprocessing & annotation stages.
