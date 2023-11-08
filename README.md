@@ -11,6 +11,7 @@ The Project developed for tracking zebras in a wild on video recorded by UAV. Th
 - Dists (normalized distances values)
 2. Annotated video with results (IDs numbers and approximated center points)
 3. Same data as video as directory with all frames in .jpg
+  
 **Sample results could be accessed by request.**
 
 ![results.png](/blob/results.png)
@@ -32,6 +33,7 @@ Bytetrack tracker type were selected, parameters were adapted to current YOLO mo
 
 ### The YOLO model
 Tracker is based on pretrained middle-size YOLOv8 detection model (yolov8m.pt, weights could be acessed on https://github.com/ultralytics/ultralytics#models Ultralytics page). Model were trained on 382 760x760 RGB tiles, and validated on 47 such tiles to single-class detection task with batch size of 20 during 60 epochs.
+
 **Model weights could be accessed by reques**t.
 
 ### Data annotation
