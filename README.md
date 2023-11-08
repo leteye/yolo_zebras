@@ -41,7 +41,7 @@ Tiles were generated with "click_sampler" helper function - cropped from selecte
 Scripts were tested on machine with Nvidia Geforce RTX 3060 12Gb, AMD Ryzen 5700X and 64Gb RAM (Ubuntu 20.04 LTS, python 3.9). All requirements could be installed with terminal: `pip install -r requirements.txt`
 
 ## Contributions
-All the work performed by merr. Original data were obtained from Andrey Gilyov.
+All the work performed by **merr**. Original data were obtained from Andrey Gilyov.
 
 ## Aknowledgements
 Work conducted in collaboration with Andrey Gilyov Research Group form Dept of Vertebrate Zoology, Saint-Petersburg State University in 2023.
