@@ -1,0 +1,19 @@
+.installed.cfg
+bin
+develop-eggs
+dist
+downloads
+eggs
+parts
+src/*.egg-info
+lib
+lib64
+.pyo
+.pyc
+__pycache__/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# yolo dataset cache
+.cache
